@@ -37,12 +37,24 @@ public class HomeController {
 
     @Autowired
     ProductService productService;
+    
+    private String getCurrentUserEmail() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            return ((UserDetails) principal).getUsername();
+        }
+        return null; // Nếu không phải người dùng đã xác thực
+    }
 
+    
     @GetMapping({"/", "/home"})
-    public String home(Model model){
+    public String home(Model model) {
+    	String email = getCurrentUserEmail();
+        model.addAttribute("email", email != null ? email : "Guest");
         model.addAttribute("cartCount", GlobalData.cart.size());
         return "index";
-    } //index
+    }
+ //index
     @GetMapping("/users/add")
     public String updateUser(Model model){
         UserDTO currentUser = new UserDTO();
@@ -83,6 +95,8 @@ public class HomeController {
 
     @GetMapping("/shop")
     public String shop(Model model){
+    	String email = getCurrentUserEmail();
+        model.addAttribute("email", email != null ? email : "Guest");
         model.addAttribute("cartCount", GlobalData.cart.size());
         model.addAttribute("categories", categoryService.getAllCategory());
         model.addAttribute("products", productService.getAllProduct());
@@ -91,6 +105,8 @@ public class HomeController {
 
     @GetMapping("/shop/category/{id}")
     public String shopByCat(@PathVariable int id, Model model){
+    	String email = getCurrentUserEmail();
+        model.addAttribute("email", email != null ? email : "Guest");
         model.addAttribute("cartCount", GlobalData.cart.size());
         model.addAttribute("categories", categoryService.getAllCategory());
         model.addAttribute("products", productService.getAllProductByCategoryId(id));
@@ -99,10 +115,14 @@ public class HomeController {
 
     @GetMapping("/shop/viewproduct/{id}")
     public String viewProduct(@PathVariable long id, Model model){
+    	String email = getCurrentUserEmail();
+        model.addAttribute("email", email != null ? email : "Guest");
         model.addAttribute("cartCount", GlobalData.cart.size());
         model.addAttribute("product", productService.getProductById(id).get());
         return "viewProduct";
     } //view product Details
+    
+   
 
 
 }
