@@ -92,12 +92,12 @@
 				<div class="card">
 					<ul class="list-group list-group-flush">
 						<a class="list-group-item list-group-item-action"
-							th:href="@{/shop}"> </i> All
-							Products
+							th:href="@{/shop}"> </i> All Products
 						</a>
 						<a class="list-group-item list-group-item-action"
 							th:each="category, iStat : ${categories}"
-							th:href="@{/shop/category/{id}(id=${category.id})}"> <span th:text="${category.name}"></span>
+							th:href="@{/shop/category/{id}(id=${category.id})}"> <span
+							th:text="${category.name}"></span>
 						</a>
 
 					</ul>
@@ -117,10 +117,10 @@
 							</div>
 							<div class="card-body d-flex flex-column justify-content-between">
 								<div>
-									<h5 class="card-title text-center" th:text="${product.name}"></h5>
-									<h4 class="text-center">
-										₹ <span th:text="${product.price}"></span>
-									</h4>
+									<h5 class="card-title" th:text="${product.name}"></h5>
+									<span style="font-weight: bold; color: black;"> <span
+										th:text="${product.price}"></span> VND
+									</span>
 									<p class="card-text" th:text="${product.description}"></p>
 								</div>
 								<!-- Nút View Product luôn cố định dưới -->
