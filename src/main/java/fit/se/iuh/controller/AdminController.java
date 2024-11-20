@@ -12,6 +12,8 @@ import fit.se.iuh.service.RoleService;
 import fit.se.iuh.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,21 +45,35 @@ public class AdminController {
 
     @Autowired
     RoleService roleService;
-
+    
+    private String getCurrentUserEmail() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            return ((UserDetails) principal).getUsername();
+        }
+        return null; // Nếu không phải người dùng đã xác thực
+    }
+    
     @GetMapping("/admin")
-    public String adminHome(){
+    public String adminHome(Model model){
+    	String email = getCurrentUserEmail();
+        model.addAttribute("email", email != null ? email : "Guest");
         return "adminHome";
     }//page admin home
 
     //Accounts
     @GetMapping("/admin/users")
     public String getAcc(Model model){
+    	String email = getCurrentUserEmail();
+        model.addAttribute("email", email != null ? email : "Guest");
         model.addAttribute("users", userService.getAllUser());
         //model.addAttribute("roles", roleService.getAllRole());
         return "users";
     }
     @GetMapping("/admin/users/add")
     public String getUserAdd(Model model){
+    	String email = getCurrentUserEmail();
+        model.addAttribute("email", email != null ? email : "Guest");
         model.addAttribute("userDTO", new UserDTO());
         model.addAttribute("roles",roleService.getAllRole());
         return "usersAdd";
@@ -115,12 +131,16 @@ public class AdminController {
     //Categories session
     @GetMapping("/admin/categories")
     public String getCat(Model model){
+    	String email = getCurrentUserEmail();
+        model.addAttribute("email", email != null ? email : "Guest");
         model.addAttribute("categories", categoryService.getAllCategory());
         return "categories";
     }//view all categories
 
     @GetMapping("/admin/categories/add")
     public String getCatAdd(Model model){
+    	String email = getCurrentUserEmail();
+        model.addAttribute("email", email != null ? email : "Guest");
         model.addAttribute("category", new Category());
         return "categoriesAdd";
     }//form add new category
@@ -151,12 +171,16 @@ public class AdminController {
     //Products session
     @GetMapping("/admin/products")
     public String getPro(Model model){
+    	String email = getCurrentUserEmail();
+        model.addAttribute("email", email != null ? email : "Guest");
         model.addAttribute("products", productService.getAllProduct());
         return "products";
     }//view all products
 
     @GetMapping("/admin/products/add")
     public String getProAdd(Model model){
+    	String email = getCurrentUserEmail();
+        model.addAttribute("email", email != null ? email : "Guest");
         model.addAttribute("productDTO", new ProductDTO());
         model.addAttribute("categories", categoryService.getAllCategory());
         return "productsAdd";
