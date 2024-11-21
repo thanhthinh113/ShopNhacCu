@@ -55,7 +55,6 @@ public class LoginController {
         userModel.setPassword(bCryptPasswordEncoder.encode(password));
         //set mac dinh role user,admin
         List<Role> roles = new ArrayList<>();
-        roles.add(roleRepository.findById(1).get());
         roles.add(roleRepository.findById(2).get());
         userModel.setRoles(roles);
         userRepository.save(userModel);
