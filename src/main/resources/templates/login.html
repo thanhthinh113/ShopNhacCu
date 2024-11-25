@@ -14,34 +14,86 @@
 	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
 	crossorigin="anonymous">
 <title>Document</title>
+<style>
+body {
+	padding-top: 70px;
+}
+
+.mask-custom {
+	background-color: rgba(0, 0, 0, 0.85);
+}
+
+.nav-link {
+	color: rgb(153, 153, 153) !important;
+	text-decoration: none !important;
+	transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-link:hover {
+	color: rgba(255, 255, 255, 0.85) !important; /* Màu trắng nhẹ */
+	transform: scale(1.05); /* Tăng nhẹ kích thước */
+}
+
+/* Cho thêm phong cách khi hover vào icon */
+.navbar-nav .nav-link i:hover {
+	color: #fff !important; /* Màu trắng cho icon */
+	transform: rotate(15deg) scale(1.2); /* Xoay và phóng to nhẹ */
+	transition: all 0.3s ease;
+}
+
+/* Đảm bảo ms-auto hoạt động */
+.ms-auto {
+	margin-left: auto !important;
+}
+</style>
 </head>
 <body>
 
 
-	<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-		<div class="container-fluid">
+	<nav
+		class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0">
+		<div class="container">
 			<!-- Logo -->
-			<a class="navbar-brand d-flex align-items-center" th:href="@{/}">
-				<img th:src="@{/images/logo.png}" src="../static/images/logo.png"
-				width="50" height="50" class="d-inline-block align-top" alt="Logo">
-				<span class="ml-2 font-weight-bold">Shop Nhạc Cụ</span>
+			<a class="navbar-brand" th:href="@{/}"> <span
+				style="color: #5e9693;">Shop</span> <span style="color: #fff;">Nhạc
+					Cụ</span>
 			</a>
+
 			<!-- Toggler for mobile view -->
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarNav" aria-controls="navbarNav"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
+			<button class="navbar-toggler" type="button"
+				data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<i class="fas fa-bars"></i>
 			</button>
+
 			<!-- Navigation Links -->
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" th:href="@{/}"
-						href="#">Home</a></li>
-					<li class="nav-item"><a class="nav-link" th:href="@{/shop}"
-						href="#">Shop</a></li>
-					<li class="nav-item"><a class="nav-link"
-						th:href="@{/register}" href="#">Signup</a></li>
-					<li class="nav-item active"><span class="nav-link">Guest</span></li>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto">
+					<li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/shop}">Shop</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/cart}">Cart</a>
+					</li>
+					<li class="nav-item" sec:authorize="isAnonymous()"><a
+						class="nav-link" th:href="@{/login}">Login</a></li>
+					<li class="nav-item" sec:authorize="isAuthenticated()"><a
+						class="nav-link" th:href="@{/logout}">Logout</a></li>
+				</ul>
+
+				<!-- Right Icons -->
+				<ul class="navbar-nav ms-auto d-flex flex-row">
+					<li class="nav-item me-3 me-lg-0"><a class="nav-link"
+						th:href="@{/cart}"> <i class="fas fa-shopping-cart"></i> <span
+							th:text="${cartCount}">0</span>
+					</a></li>
+					<li class="nav-item me-3 me-lg-0"><a class="nav-link"
+						href="#!"> <i class="fab fa-twitter"></i>
+					</a></li>
+					<li class="nav-item me-3 me-lg-0"><a class="nav-link"
+						href="#!"> <i class="fab fa-instagram"></i>
+					</a></li>
 				</ul>
 			</div>
 		</div>
