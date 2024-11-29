@@ -18,10 +18,18 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
 	rel="stylesheet" />
 <style>
+html, body {
+    height: 100%;
+}
 body {
 	padding-top: 70px; /* Đảm bảo phần nội dung không bị che */
+	display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
-
+.container {
+    flex: 1; /* Phần nội dung chiếm toàn bộ không gian còn lại */
+}
 .list-group-item-action:hover {
 	background-color: #f8f9fa; /* Nhẹ nhàng sáng hơn */
 	color: #007bff; /* Màu xanh cho hover */
