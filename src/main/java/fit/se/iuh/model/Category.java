@@ -13,7 +13,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    private Integer  id;
+    private int  id;
 
     private String name;
 
@@ -32,5 +32,7 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	
 
 }//create table mapping trong db
