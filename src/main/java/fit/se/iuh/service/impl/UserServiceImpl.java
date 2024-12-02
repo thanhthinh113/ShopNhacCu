@@ -1,14 +1,14 @@
 package fit.se.iuh.service.impl;
 
-import fit.se.iuh.model.User;
-import fit.se.iuh.repository.UserRepository;
-import fit.se.iuh.service.UserService;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Optional;
+import fit.se.iuh.model.User;
+import fit.se.iuh.repository.UserRepository;
+import fit.se.iuh.service.UserService;
 @Component
 public class UserServiceImpl implements UserService {
     @Autowired

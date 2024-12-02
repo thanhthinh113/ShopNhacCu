@@ -10,6 +10,7 @@ import fit.se.iuh.service.CategoryService;
 import fit.se.iuh.service.ProductService;
 import fit.se.iuh.service.RoleService;
 import fit.se.iuh.service.UserService;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -79,8 +81,12 @@ public class AdminController {
         return "usersAdd";
     }
     @PostMapping("/admin/users/add")
-    public String postUserAdd(@ModelAttribute("userDTO") UserDTO userDTO) {
+    public String postUserAdd(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult) {
         //convert dto > entity
+    	if (bindingResult.hasErrors()) {
+            // Nếu có lỗi, quay lại trang và hiển thị các lỗi
+            return "usersAdd";
+        }
         User user = new User();
         user.setId(userDTO.getId());
         user.setEmail(userDTO.getEmail());
@@ -187,10 +193,16 @@ public class AdminController {
     }// form add new product
 
     @PostMapping("/admin/products/add")
-    public String postProAdd(@ModelAttribute("productDTO") ProductDTO productDTO,
+    public String postProAdd(@Valid @ModelAttribute("productDTO") ProductDTO productDTO,
+                             BindingResult bindingResult,
                              @RequestParam("productImage") MultipartFile fileProductImage,
                              @RequestParam("imgName") String imgName) throws IOException {
-        //convert dto > entity
+        if (bindingResult.hasErrors()) {
+            // Nếu có lỗi, quay lại form với các thông báo lỗi
+            return "productsAdd";
+        }
+
+        // Convert dto > entity
         Product product = new Product();
         product.setId(productDTO.getId());
         product.setName(productDTO.getName());
@@ -198,19 +210,21 @@ public class AdminController {
         product.setPrice(productDTO.getPrice());
         product.setWeight(productDTO.getWeight());
         product.setDescription(productDTO.getDescription());
+        
         String imageUUID;
-        if(!fileProductImage.isEmpty()){
+        if (!fileProductImage.isEmpty()) {
             imageUUID = fileProductImage.getOriginalFilename();
             Path fileNameAndPath = Paths.get(uploadDir, imageUUID);
             Files.write(fileNameAndPath, fileProductImage.getBytes());
-        }else {
+        } else {
             imageUUID = imgName;
-        }//save image
+        }
         product.setImageName(imageUUID);
 
         productService.updateProduct(product);
         return "redirect:/admin/products";
-    }//form add new product > do add
+    }
+//form add new product > do add
 
     @GetMapping("/admin/products/delete/{id}")
     public String deletePro(@PathVariable long id){

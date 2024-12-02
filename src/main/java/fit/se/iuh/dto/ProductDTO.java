@@ -1,5 +1,7 @@
 package fit.se.iuh.dto;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 
@@ -7,14 +9,18 @@ import lombok.Data;
 public class ProductDTO {
     private Long id;
 
+    @NotEmpty(message = "Name cannot be empty")
     private String name;
 
     private int categoryId;
 
+    @Min(value = 0, message = "Price must be greater than or equal to 0")
     private double price;
 
+    @Min(value = 0, message = "Weight must be greater than or equal to 0")
     private double weight;
 
+    @NotEmpty(message = "Description cannot be empty")
     private String description;
 
     private String imageName;

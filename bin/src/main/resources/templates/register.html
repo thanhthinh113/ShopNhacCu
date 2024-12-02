@@ -1,6 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
@@ -17,12 +16,7 @@
 <title>Document</title>
 <style>
 body {
-	padding-top: 70px; /* Đảm bảo phần nội dung không bị che */
-}
-
-.carousel-inner img {
-	width: 100%;
-	height: 100%;
+	padding-top: 70px;
 }
 
 .mask-custom {
@@ -54,6 +48,8 @@ body {
 </style>
 </head>
 <body>
+
+
 	<nav
 		class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0">
 		<div class="container">
@@ -92,8 +88,7 @@ body {
 						th:href="@{/cart}"> <i class="fas fa-shopping-cart"></i> <span
 							th:text="${cartCount}">0</span>
 					</a></li>
-					<li class="nav-item me-3 me-lg-0"><a class="nav-link"
-						th:text="${email}">User Email</a></li>
+
 					<li class="nav-item me-3 me-lg-0"><a class="nav-link"
 						href="#!"> <i class="fab fa-twitter"></i>
 					</a></li>
@@ -104,53 +99,43 @@ body {
 			</div>
 		</div>
 	</nav>
-
-
-
-	<div class="jumbotron text-center">
-		<h1 class="display-4">Chào Mừng</h1>
-		<p>Đến với cửa hàng trực tuyến của chúng tôi</p>
-		<!-- <form th:action="@{/users/add}">
-			<button type="submit" class="btn btn-primary">Manage your
-				Account</button>
-		</form>
-		-->
-	</div>
 	<div class="container">
-		<div id="demo" class="carousel slide" data-ride="carousel">
-
-			<!-- Indicators -->
-			<ul class="carousel-indicators">
-				<li data-target="#demo" data-slide-to="0" class="active"></li>
-				<li data-target="#demo" data-slide-to="1"></li>
-				<li data-target="#demo" data-slide-to="2"></li>
-			</ul>
-
-			<!-- The slideshow -->
-			<div class="carousel-inner">
-				<div class="carousel-item active">
-					<img th:src="@{/images/slide0.jpg}" src="../static/images/logo.png"
-						alt="" width="900" height="350">
+		<div class="col-sm-6">
+			<h3 style="margin-top: 10px">Sign Up Now</h3>
+			<p>Please fill out this to register</p>
+			<form th:action="@{/register}" th:object="${user}" method="post">
+				<div class="form-group">
+					<label for="firstName">First Name</label> <input type="text"
+						name="firstName" id="firstName" required
+						placeholder="Your Firstname" class="form-control form-control-lg">
 				</div>
-				<div class="carousel-item">
-					<img th:src="@{/images/slide1.jpg}" src="../static/images/logo.png"
-						alt="" width="900" height="350">
+				<div class="form-group">
+					<label for="lastName">Last Name</label> <input type="text"
+						name="lastName" id="lastName" required placeholder="Your Lastname"
+						class="form-control form-control-lg">
 				</div>
-				<div class="carousel-item">
-					<img th:src="@{/images/slide2.jpg}" src="../static/images/logo.png"
-						alt="" width="900" height="350">
+				<div class="form-group">
+					<label for="email">Email address</label> <input type="email"
+						class="form-control form-control-lg" required minlength="6"
+						placeholder="Email" name="email" id="email"
+						aria-describedby="emailHelp"> <small id="emailHelp"
+						class="form-text text-muted">We'll never share your email
+						with anyone else.</small>
 				</div>
-			</div>
+				<div class="form-group">
+					<label for="password">Password</label> <input type="password"
+						class="form-control form-control-lg" required
+						placeholder="Password" name="password" id="password">
+				</div>
 
-			<!-- Left and right controls -->
-			<a class="carousel-control-prev" href="#demo" data-slide="prev">
-				<span class="carousel-control-prev-icon"></span>
-			</a> <a class="carousel-control-next" href="#demo" data-slide="next">
-				<span class="carousel-control-next-icon"></span>
-			</a>
+				<input type="submit" value="Register"
+					class="btn btn-primary btn-block"> <span
+					style="margin-top: 10px">Already have an account <a
+					class="linkControl" href="./login.html" th:href="@{/login}">Login
+						here</a></span>
+			</form>
 		</div>
 	</div>
-
 
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

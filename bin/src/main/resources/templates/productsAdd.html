@@ -34,64 +34,67 @@
                 </li>
                 <li class="nav-item active"><span class="nav-link"
 						th:text="${email}">User Email</span></li>
+
             </ul>
+
         </div>
     </div>
 </nav>
-
 <div class="container">
-    <h3>Account Infor</h3>
-    <form th:action="@{/admin/users/add}" method="post" th:object="${userDTO}" enctype="multipart/form-data">
+    <h3>Product Infor</h3>
+    <form th:action="@{/admin/products/add}" method="post" th:object="${productDTO}" enctype="multipart/form-data">
         <div class="row">
             <div class="col-sm-5">
+
                 <input type="hidden" name="id" th:field="*{id}">
-                
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" class="form-control" th:field="*{email}" name="email" id="email"
-                           placeholder="Enter Email">
-                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></div>
-                </div>
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" required th:field="*{name}" name="name" id="name"
+                           placeholder="Enter name">
 
+                </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" th:field="*{password}" name="password" id="password"
-                           placeholder="Enter Password">
-                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></div>
+                    <label for="category">Select Category</label>
+                    <select class="form-control" th:field="*{categoryId}" id="category" name="category">
+                        <option th:each="category :${categories}"
+                                th:value="${category.id}"
+                                th:text="${category.name}"
+                        >
+                    </select>
                 </div>
-
                 <div class="form-group">
-                    <label for="firstName">First Name</label>
-                    <input type="text" class="form-control" th:field="*{firstName}" name="firstName" id="firstName"
-                           placeholder="Enter First Name">
-                    <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="text-danger"></div>
+                    <label for="price">Price</label>
+                    <input type="number" class="form-control" required th:field="*{price}" name="price" id="price"
+                           placeholder="Price">
                 </div>
-
                 <div class="form-group">
-                    <label for="lastName">Last Name</label>
-                    <input type="text" class="form-control" th:field="*{lastName}" name="lastName" id="lastName"
-                           placeholder="Enter Last Name">
-                    <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-danger"></div>
+                    <label for="weight">Weight in grams</label>
+                    <input type="number" class="form-control" required th:field="*{weight}" name="weight" id="weight"
+                           placeholder="Weight">
                 </div>
-
+                <div class="form-group">
+                    <label for="description">Product Description</label>
+                    <textarea class="form-control" rows="5" th:field="*{description}" name="description" id="description"></textarea>
+                </div>
             </div>
-
             <div class="col-sm-5">
-                <p>Roles</p>
-                <ul>
-                    <li th:each="role : ${roles}">
-                        <div>
-                            <input type="checkbox" th:field="*{roleIds}" th:value="${role.id}">
-                            <label th:text="${role.name}"></label>
-                        </div>
-                    </li>
-                </ul>
+                <p>Product Image</p>
+                <div class="custom-file">
+                    <input type="file"  class="custom-file-input" name="productImage" accept="image/jpeg, image/png, image/jpg"  id="productImage"/>
+                    <label class="custom-file-label" for="productImage">Choose file</label>
+                </div>
+                <div class="form-group">
+                    <img src="#" id="imgPreview" height="100px" width="100px" th:src="@{${'/productImages/' + productDTO.imageName}}" style="margin-top: 20px" alt=" ">
+                </div>
+                <input type="hidden" name="imgName" th:value="${productDTO.imageName}">
+                <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <button type="button" class="btn btn-danger" th:onclick="window.location.href='/admin/users'" href="#">Cancel</button>
             </div>
+
         </div>
     </form>
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -102,6 +105,23 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-
+<script>
+    function readURL(input){
+        if(input.files && input.files[0]){
+            var reader = new FileReader();
+            reader.onload = function(e){
+                $('#imgPreview').attr('src', e.target.result).width(100).height(100);
+            }
+            reader.readAsDataURL(input.files[0])
+        }
+    }
+    $('#productImage').change(function(){
+        readURL(this);
+    });
+    $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
 </body>
 </html>
