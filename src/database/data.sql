@@ -24,3 +24,13 @@ VALUES ('Compact digital piano with realistic touch and sound quality.', 'dan-pi
 INSERT INTO `NhacCu`.`roles` (`name`) VALUES ('ROLE_ADMIN');
 INSERT INTO `NhacCu`.`roles` (`name`) VALUES ('ROLE_USER');
 
+-- Insert user with encrypted password
+
+INSERT INTO users (first_name, last_name, email, password) 
+VALUES ('Tuan', 'Phan', 'TuanPhan1@gmail.com', '$2b$12$4sA4udX37JvoSLyiZKIXMuZDZez3jGuK5OlEHYFEXBQmQxkto9PJy');
+
+-- 123456
+
+
+INSERT INTO user_role (USER_ID, ROLE_ID) 
+VALUES (1, 1), (1, 2);
