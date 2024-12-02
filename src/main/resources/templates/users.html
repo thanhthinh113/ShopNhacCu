@@ -48,6 +48,7 @@
         <tr>
             <th scope="col">SN</th>
             <th scope="col">Email</th>
+            <th scope="col">Role</th> 
             <th scope="col">Delete</th>
             <th scope="col">Update</th>
         </tr>
@@ -57,7 +58,13 @@
         <tr th:each="user, iStat : ${users}">
             <th scope="row" th:text="${iStat.index + 1}">1</th>
             <td th:text="${user.email}">Larry</td>
-
+			<td>
+            <ul>
+                <li th:each="role : ${roles}" 
+                    th:if="${role.users.contains(user)}" 
+                    th:text="${role.name}"></li>
+            </ul>
+        </td>
             <td><a href="" th:href="@{/admin/users/delete/{id}(id=${user.id})}" class="btn btn-danger">Delete</a></td>
             <td><a href="" th:href="@{/admin/users/update/{id}(id=${user.id})}" class="btn btn-warning">Update</a></td>
 

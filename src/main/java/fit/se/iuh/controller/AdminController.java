@@ -69,7 +69,7 @@ public class AdminController {
     	String email = getCurrentUserEmail();
         model.addAttribute("email", email != null ? email : "Guest");
         model.addAttribute("users", userService.getAllUser());
-        //model.addAttribute("roles", roleService.getAllRole());
+        model.addAttribute("roles", roleService.getAllRole());
         return "users";
     }
     @GetMapping("/admin/users/add")
