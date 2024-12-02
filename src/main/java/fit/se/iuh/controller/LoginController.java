@@ -49,17 +49,29 @@ public class LoginController {
     } //page register
 
     @PostMapping("/register")
-    public String registerPost(@ModelAttribute User userModel, HttpServletRequest request) throws ServletException{
-        //chuyen password tu form dki thanh dang ma hoa
+    public String registerPost(@ModelAttribute User userModel, HttpServletRequest request, Model model) throws ServletException {
+        // Kiểm tra xem email đã tồn tại trong cơ sở dữ liệu chưa
+        if (userRepository.findUserByEmail(userModel.getEmail()).isPresent()) {
+            // Thêm thông báo lỗi vào model để hiển thị trên giao diện
+            model.addAttribute("errorMessage", "Email đã tồn tại. Vui lòng sử dụng email khác.");
+            return "register"; // Trả về trang đăng ký
+        }
+        
+        // Chuyển password từ form đăng ký thành dạng mã hóa
         String password = userModel.getPassword();
         userModel.setPassword(bCryptPasswordEncoder.encode(password));
-        //set mac dinh role user,admin
+        
+        // Set mặc định role user
         List<Role> roles = new ArrayList<>();
         roles.add(roleRepository.findById(2).get());
         userModel.setRoles(roles);
+        
+        // Lưu người dùng mới vào cơ sở dữ liệu
         userRepository.save(userModel);
-        //login & chuyen den page home
+        
+        // Đăng nhập tự động và chuyển đến trang chủ
         request.login(userModel.getEmail(), password);
         return "redirect:/";
-    }//after register success
+    }
+//after register success
 }

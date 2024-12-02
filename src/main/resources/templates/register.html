@@ -52,90 +52,51 @@ body {
 
 	<nav
 		class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0">
-		<div class="container">
-			<!-- Logo -->
-			<a class="navbar-brand" th:href="@{/}"> <span
-				style="color: #5e9693;">Shop</span> <span style="color: #fff;">Nhạc
-					Cụ</span>
-			</a>
+<div class="container">
+    <div class="col-sm-6">
+        <h3 style="margin-top: 10px">Sign Up Now</h3>
+        <p>Please fill out this to register</p>
+        
+        <!-- Hiển thị thông báo lỗi nếu có -->
+        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+            <p th:text="${errorMessage}"></p>
+        </div>
 
-			<!-- Toggler for mobile view -->
-			<button class="navbar-toggler" type="button"
-				data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<i class="fas fa-bars"></i>
-			</button>
+        <form th:action="@{/register}" th:object="${user}" method="post">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" name="firstName" id="firstName" required
+                       placeholder="Your Firstname" class="form-control form-control-lg">
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" name="lastName" id="lastName" required
+                       placeholder="Your Lastname" class="form-control form-control-lg">
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control form-control-lg" required minlength="6"
+                       placeholder="Email" name="email" id="email"
+                       aria-describedby="emailHelp">
+                <small id="emailHelp" class="form-text text-muted">
+                    We'll never share your email with anyone else.
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control form-control-lg" required
+                       placeholder="Password" name="password" id="password">
+            </div>
 
-			<!-- Navigation Links -->
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto">
-					<li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" th:href="@{/shop}">Shop</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" th:href="@{/cart}">Cart</a>
-					</li>
-					<li class="nav-item" sec:authorize="isAnonymous()"><a
-						class="nav-link" th:href="@{/login}">Login</a></li>
-					<li class="nav-item" sec:authorize="isAuthenticated()"><a
-						class="nav-link" th:href="@{/logout}">Logout</a></li>
-				</ul>
+            <input type="submit" value="Register" class="btn btn-primary btn-block">
+            <span style="margin-top: 10px">
+                Already have an account 
+                <a class="linkControl" href="./login.html" th:href="@{/login}">Login here</a>
+            </span>
+        </form>
+    </div>
+</div>
 
-				<!-- Right Icons -->
-				<ul class="navbar-nav ms-auto d-flex flex-row">
-					<li class="nav-item me-3 me-lg-0"><a class="nav-link"
-						th:href="@{/cart}"> <i class="fas fa-shopping-cart"></i> <span
-							th:text="${cartCount}">0</span>
-					</a></li>
-
-					<li class="nav-item me-3 me-lg-0"><a class="nav-link"
-						href="#!"> <i class="fab fa-twitter"></i>
-					</a></li>
-					<li class="nav-item me-3 me-lg-0"><a class="nav-link"
-						href="#!"> <i class="fab fa-instagram"></i>
-					</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-	<div class="container">
-		<div class="col-sm-6">
-			<h3 style="margin-top: 10px">Sign Up Now</h3>
-			<p>Please fill out this to register</p>
-			<form th:action="@{/register}" th:object="${user}" method="post">
-				<div class="form-group">
-					<label for="firstName">First Name</label> <input type="text"
-						name="firstName" id="firstName" required
-						placeholder="Your Firstname" class="form-control form-control-lg">
-				</div>
-				<div class="form-group">
-					<label for="lastName">Last Name</label> <input type="text"
-						name="lastName" id="lastName" required placeholder="Your Lastname"
-						class="form-control form-control-lg">
-				</div>
-				<div class="form-group">
-					<label for="email">Email address</label> <input type="email"
-						class="form-control form-control-lg" required minlength="6"
-						placeholder="Email" name="email" id="email"
-						aria-describedby="emailHelp"> <small id="emailHelp"
-						class="form-text text-muted">We'll never share your email
-						with anyone else.</small>
-				</div>
-				<div class="form-group">
-					<label for="password">Password</label> <input type="password"
-						class="form-control form-control-lg" required
-						placeholder="Password" name="password" id="password">
-				</div>
-
-				<input type="submit" value="Register"
-					class="btn btn-primary btn-block"> <span
-					style="margin-top: 10px">Already have an account <a
-					class="linkControl" href="./login.html" th:href="@{/login}">Login
-						here</a></span>
-			</form>
-		</div>
-	</div>
 
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
